@@ -1,30 +1,31 @@
 // src/routes.tsx
-import React from 'react';
-import { Navigate, RouteObject } from 'react-router-dom';
-import { ROUTES } from './config';
+import { Navigate, RouteObject } from "react-router-dom";
+import { ROUTES } from "./config";
 
 // Components
-import LoginPage from './features/auth/LoginPage';
-import ProtectedRoute from './features/auth/ProtectedRoute';
+import ProtectedRoute from "./features/auth/ProtectedRoute";
+import StrategyDashboard from "./features/strategies/StrategyDashboard";
 
 // Заглушки для страниц (эти компоненты нужно будет создать)
-const Dashboard = () => <div>Dashboard Page</div>;
 const Portfolio = () => <div>Portfolio Page</div>;
 const Trading = () => <div>Trading Page</div>;
 const Account = () => <div>Account Page</div>;
 const Settings = () => <div>Settings Page</div>;
 const NotFound = () => <div>404 - Page Not Found</div>;
 
+// Убираем компонент LoginPage, так как теперь используем внешнюю аутентификацию
+// import LoginPage from './features/auth/LoginPage';
+
 const routes: RouteObject[] = [
-  // Публичный маршрут - страница логина
+  // Публичный маршрут для перенаправления на внешнюю аутентификацию
   {
     path: ROUTES.LOGIN,
-    element: <LoginPage />,
+    element: <Navigate to="/" replace />, // Перенаправляем на корневой маршрут, где App.tsx решит что делать
   },
-  
+
   // Защищенные маршруты
   {
-    path: '/',
+    path: "/",
     element: <ProtectedRoute />, // ProtectedRoute проверяет аутентификацию
     children: [
       {
@@ -33,7 +34,7 @@ const routes: RouteObject[] = [
       },
       {
         path: ROUTES.DASHBOARD,
-        element: <Dashboard />,
+        element: <StrategyDashboard />, // Используем наш новый компонент для стратегий
       },
       {
         path: ROUTES.PORTFOLIO,
@@ -53,10 +54,10 @@ const routes: RouteObject[] = [
       },
     ],
   },
-  
+
   // Страница 404
   {
-    path: '*',
+    path: "*",
     element: <NotFound />,
   },
 ];
