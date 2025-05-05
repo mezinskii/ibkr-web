@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter,
   useRoutes,
@@ -21,7 +21,7 @@ const AppRoutes = () => {
 
 // Компонент для проверки аутентификации и редиректа к IB Gateway
 const AuthCheck = () => {
-  const { isAuthenticated, isLoading, authStatus } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
